@@ -1,0 +1,16 @@
+{
+  "name": "tipe-2023-2024-poker-ia",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "tsc && node ./build/main.js",
+    "run": "node ./build/main.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "brain.js": "^2.0.0-beta.18"
+  }
+}
