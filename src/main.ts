@@ -1,5 +1,6 @@
 // import neural from "brain.js";
 import { Card, Color, Value } from "./class/Card";
+import { FileParser } from "./class/Parser";
 
 // let neuralNetwork = new neural.NeuralNetwork({
 // 	inputSize : 8,
@@ -8,6 +9,14 @@ import { Card, Color, Value } from "./class/Card";
 // 	activation : "sigmoid"
 // })
 
-let myZolieCarte = Card.ParseCard("9c");
+FileParser.ConvertFileToArray("/home/flo/Téléchargements/IRCData/IRCdata/holdem/199504/hroster").then((data) => {
+	console.log(data[0]);
+});
 
-console.log();
+FileParser.ConvertFileToArray("/home/flo/Téléchargements/IRCData/IRCdata/holdem/199504/hdb").then((data) => {
+	console.log(data[0]);
+});
+
+FileParser.ConvertFileToArray("/home/flo/Téléchargements/IRCData/IRCdata/holdem/199504/pdb/pdb.[[").then((data) => {
+	console.log(data[0]);
+});
