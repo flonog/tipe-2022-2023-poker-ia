@@ -9,14 +9,16 @@ import { FileParser } from "./class/Parser";
 // 	activation : "sigmoid"
 // })
 
-FileParser.ConvertFileToArray("/home/flo/Téléchargements/IRCData/IRCdata/holdem/199504/hroster").then((data) => {
-	console.log(data[0]);
-});
+// FileParser.ConvertFileToArray("/home/flo/Téléchargements/IRCData/IRCdata/holdem/199504/hroster").then((data) => {
+// 	console.log(data[0]);
+// });
 
-FileParser.ConvertFileToArray("/home/flo/Téléchargements/IRCData/IRCdata/holdem/199504/hdb").then((data) => {
-	console.log(data[0]);
-});
+// FileParser.ConvertFileToArray("/home/flo/Téléchargements/IRCData/IRCdata/holdem/199504/hdb").then((data) => {
+// 	console.log(data[data.length - 1]);
+// });
 
-FileParser.ConvertFileToArray("/home/flo/Téléchargements/IRCData/IRCdata/holdem/199504/pdb/pdb.[[").then((data) => {
-	console.log(data[0]);
-});
+FileParser.ParseGame("/home/flo/Téléchargements/IRCData/IRCdata/holdem/199504/hdb").then((value) => console.log(value)).catch((err) => console.error(err))
+
+// FileParser.ConvertFileToArray("/home/flo/Téléchargements/IRCData/IRCdata/holdem/199504/pdb/pdb.[[").then((data) => {
+// 	console.log(data[0]);
+// });

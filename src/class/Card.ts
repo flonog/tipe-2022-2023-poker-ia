@@ -1,8 +1,11 @@
+import { GamePart } from "./Game";
+
 export enum Color {
 	Spade = "s", // Trèfle
 	Heart = "h", // Coeur
 	Club = "c", // Pic
-	Diamond = "d" // Carreau
+	Diamond = "d", // Carreau
+	None = "0", 
 }
 
 export enum Value {
@@ -19,7 +22,8 @@ export enum Value {
 	Four = "4",
 	Three = "3",
 	Two = "2",
-	One = "1"
+	One = "1",
+	None = "0"
 }
 
 export class Card{
@@ -45,6 +49,16 @@ export class Card{
 
 	public static ParseCard(id : string) : Card {
 		return new Card(<Color> id[1], <Value> id[0]);
+	}
+
+	static ParseFromStringArray(array : string[]): Card[] {
+		let cardList : Card[] = [];
+		for(let i = 0; i <= array.length; i ++){
+			if(array[i] == undefined)
+				break;
+			cardList.push(this.ParseCard(array[i] ?? "00"));
+		}
+		return cardList;
 	}
 	
 }
