@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "@types/node": "^18.15.3",
-    "brain.js": "^2.0.0-beta.18"
+    "brain.js": "^2.0.0-beta.18",
+    "gl": "^6.0.2"
   }
 }

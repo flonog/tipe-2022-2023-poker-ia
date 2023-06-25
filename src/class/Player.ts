@@ -9,6 +9,21 @@ export class Player{
 	public winnings : number = 0;
 	public cards : Card[] = [];
 	public actions : PlayerAction[] = [];
+
+	public getAgressivityFactor(gamePartType : GamePartType = GamePartType.Flop){
+		let agressivity = 0;
+		for(let i = 0; i <= (<number> gamePartType); i++){
+			let actions = this.actions[i]?.actions ?? [];
+			for(let j = 0 ; j < actions.length; j++){
+				if(actions[j] == ActionType.Raise){
+					agressivity++;
+				}
+			}
+		}
+		return agressivity;
+	}
+
+	public hasWon = false;
 }
 
 export class PlayerAction{
@@ -17,10 +32,10 @@ export class PlayerAction{
 
 	public static ParseStringArray(value : string[]){
 		let actions : PlayerAction[] = [];
-		for(let i = 0; i < 5; i++){
+		for(let i = 0; i < 4; i++){
 			let newAction = new PlayerAction();
 			newAction.gamePartType = (<GamePartType> i);
-			for(let j = 0; j < (value[i] ?? []).length; i++){
+			for(let j = 0; j < (value[i] ?? []).length; j++){
 				switch((value[i] ?? "")[j]){
 					case "B":
 						newAction.actions.push(ActionType.Blind);

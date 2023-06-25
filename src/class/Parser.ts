@@ -7,6 +7,7 @@ let temp : Map<string, string[][]> = new Map<string, string[][]>();
 
 export class FileParser{
 	public static async ConvertFileToArray(path : string, cached : boolean = true) : Promise<string[][]>{
+		cached = true;
 		if(cached && temp.has(path)){
 			return temp.get(path) ?? [];
 		}
@@ -25,6 +26,10 @@ export class FileParser{
 		return new_array;
 	}
 
+	public static ClearCache(){
+		temp.clear();
+	}
+
 	public static async ParseGame(path : string) : Promise<Game[]>{
 		let gameList : Game[] = [];
 		let value = await this.ConvertFileToArray(path);
@@ -37,10 +42,11 @@ export class FileParser{
 			game.hand = parseInt(data[2] ?? "-1");
 			game.playerCount = parseInt(data[3] ?? "-1");
 			game.gamePart = GamePart.ParseFromStringArray(data.slice(4, 8));
-			game.board = Card.ParseFromStringArray(data.slice(9, 14));
+			game.board = Card.ParseFromStringArray(data.slice(8, 14));
 			game.playerList = roster;
 			gameList.push(game);
 		}
+		this.ClearCache();
 		return gameList;
 	}
 
@@ -48,20 +54,25 @@ export class FileParser{
 		let playerList : Player[] = [];
 		for(let i = 0; i < playerNameList.length; i++){
 			let player : Player = new Player();
-			let value = await this.ConvertFileToArray(path.replace("/hroster", "/pdb/pdb." + playerNameList[i]), false);
-			let round = value.find((val) => parseInt(val[1] ?? "0") == timestamp);
-			if(round == undefined){
-				continue;
-			}
-			player.name = playerNameList[i] ?? "null";
-			player.timestamp = timestamp;
-			player.bid = parseInt(round[9] ?? "-1");
-			player.bankroll = parseInt(round[8] ?? "-1");
-			player.winnings = parseInt(round[10] ?? "-1");
-			player.cards = Card.ParseFromStringArray(round.slice(11));
-			player.actions = PlayerAction.ParseStringArray(round.slice(4, 7));
+			try{
+				let value = await this.ConvertFileToArray(path.replace("/hroster", "/pdb/pdb." + playerNameList[i]));
+				let round = value.find((val) => parseInt(val[1] ?? "0") == timestamp);
+				if(round == undefined){
+					continue;
+				}
+				player.name = playerNameList[i] ?? "null";
+				player.timestamp = timestamp;
+				player.bid = parseInt(round[9] ?? "-1");
+				player.bankroll = parseInt(round[8] ?? "-1");
+				player.winnings = parseInt(round[10] ?? "-1");
+				player.hasWon = !(player.winnings == 0);
+				player.cards = Card.ParseFromStringArray(round.slice(11));
+				player.actions = PlayerAction.ParseStringArray(round.slice(4, 8));
 
-			playerList.push(player);
+				playerList.push(player);
+			}
+			catch{
+			}
 		}
 
 		return playerList;

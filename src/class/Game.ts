@@ -9,6 +9,12 @@ export class Game{
 	public playerCount : number = 0;
 	public gamePart : GamePart[] = [];
 	public board : Card[] = [];
+
+	public static CleanGameArray(game : Game[]){
+		return game.filter((value) => {
+			return value.board.length == 5 && value.playerCount == 4
+		})
+	}
 }
 
 export class GamePart{
